@@ -5,6 +5,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 # from update_tables import update_data
 from sqlalchemy import create_engine, text
+import os
+from datetime import datetime
 
 # Botón para actualizar los datos
 st.set_page_config(page_title="Dashboard SIMA", layout="centered")
@@ -1850,7 +1852,15 @@ def coctel_dashboard():
         st.warning("No hay datos para mostrar")
     
 #%%%% Agregar opción al menú lateral
+file_path = "app/tables/temp_base_coctel.parquet"
+if os.path.exists(file_path):
+    last_updated = os.path.getmtime(file_path)
+    last_updated_date = datetime.fromtimestamp(last_updated).strftime('%d/%m/%Y %H:%M:%S')
+else:
+    last_updated_date = "Archivo no encontrado"
+
 st.sidebar.title("Opciones")
+st.sidebar.write(f"Fecha de última actualización de datos: {last_updated_date}")
 menu = st.sidebar.radio(
     "Selecciona una sección",
     ["Análisis de Cocteles", "Usuarios y Acontecimientos", "Actualizar Datos"]
