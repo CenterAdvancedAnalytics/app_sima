@@ -1669,8 +1669,8 @@ if menu == "Análisis de Cocteles":
 elif menu == "Usuarios y Acontecimientos":
     usarios_acontecimientos_dashboard()
 
-elif menu == "Actualizar Datos":
-    with st.spinner("Actualizando datos, por favor espera..."):
-        update_data()
-    st.success("Datos actualizados correctamente.")
+# elif menu == "Actualizar Datos":
+#     with st.spinner("Actualizando datos, por favor espera..."):
+#         update_data()
+#     st.success("Datos actualizados correctamente.")
 
