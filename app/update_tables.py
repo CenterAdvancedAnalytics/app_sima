@@ -1,19 +1,26 @@
 import pandas as pd
 from sqlalchemy import create_engine, text
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
 from pathlib import Path
+import streamlit as st
 
-# Especificar la ruta al archivo .env
-dotenv_path = Path('app/.env')  # Cambia esta ruta por la ubicación de tu archivo .env
-load_dotenv(dotenv_path=dotenv_path)
+# # Especificar la ruta al archivo .env
+# dotenv_path = Path('app/.env')  # Cambia esta ruta por la ubicación de tu archivo .env
+# load_dotenv(dotenv_path=dotenv_path)
 
-# Cargar las variables desde el archivo .env
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
-DB_NAME = os.getenv('DB_NAME')
+# # Cargar las variables desde el archivo .env
+# DB_USER = os.getenv('DB_USER')
+# DB_PASSWORD = os.getenv('DB_PASSWORD')
+# DB_HOST = os.getenv('DB_HOST')
+# DB_PORT = os.getenv('DB_PORT')
+# DB_NAME = os.getenv('DB_NAME')
+
+DB_USER = st.secrets["DB_USER"]
+DB_PASSWORD = st.secrets["DB_PASSWORD"]
+DB_HOST = st.secrets["DB_HOST"]
+DB_PORT = st.secrets["DB_PORT"]
+DB_NAME = st.secrets["DB_NAME"]
 
 # URL y motor de conexión
 SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
