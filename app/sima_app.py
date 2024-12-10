@@ -1660,7 +1660,7 @@ st.sidebar.title("Opciones")
 st.sidebar.write(f"Fecha de última actualización de datos: {last_updated_date}")
 menu = st.sidebar.radio(
     "Selecciona una sección",
-    ["Análisis de Cocteles", "Usuarios y Acontecimientos", "Actualizar Datos"]
+    ["Análisis de Cocteles", "Usuarios y Acontecimientos"]
 )
 
 if menu == "Análisis de Cocteles":
