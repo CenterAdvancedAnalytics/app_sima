@@ -51,7 +51,7 @@ def usarios_acontecimientos_dashboard():
     st.subheader("Usuarios que registraron acontecimientos el ultimo dia de la base de datos")
     st.dataframe(usuarios_ultimo_dia)
 
-    st.subheader("Usuarios que registraron acontecimientos en los últimos 7 días")
+    st.subheader("Numero de acontecimientos registrados por usuario y por dia en los últimos 7 días")
     st.dataframe(usuarios_semana)
 
 #%%% def funcion cocteles
