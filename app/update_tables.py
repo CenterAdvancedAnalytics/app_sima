@@ -171,7 +171,13 @@ def update_data():
             SELECT
                 u.id AS id_usuario,
                 u.nombre AS nombre_usuario,
-                COUNT(a.id) AS total_acontecimientos
+                SUM(CASE WHEN DATE(a.fecha_registro) = CURRENT_DATE - INTERVAL '6 days' THEN 1 ELSE 0 END) AS dia_1,
+                SUM(CASE WHEN DATE(a.fecha_registro) = CURRENT_DATE - INTERVAL '5 days' THEN 1 ELSE 0 END) AS dia_2,
+                SUM(CASE WHEN DATE(a.fecha_registro) = CURRENT_DATE - INTERVAL '4 days' THEN 1 ELSE 0 END) AS dia_3,
+                SUM(CASE WHEN DATE(a.fecha_registro) = CURRENT_DATE - INTERVAL '3 days' THEN 1 ELSE 0 END) AS dia_4,
+                SUM(CASE WHEN DATE(a.fecha_registro) = CURRENT_DATE - INTERVAL '2 days' THEN 1 ELSE 0 END) AS dia_5,
+                SUM(CASE WHEN DATE(a.fecha_registro) = CURRENT_DATE - INTERVAL '1 days' THEN 1 ELSE 0 END) AS dia_6,
+                SUM(CASE WHEN DATE(a.fecha_registro) = CURRENT_DATE THEN 1 ELSE 0 END) AS dia_7
             FROM
                 usuarios u
             LEFT JOIN
@@ -181,7 +187,7 @@ def update_data():
             GROUP BY
                 u.id, u.nombre
             ORDER BY
-                total_acontecimientos DESC;
+                u.nombre;
             """),
             "read": text("SELECT * FROM temp_usuarios_7_dias;")
         }
