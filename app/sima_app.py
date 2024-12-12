@@ -1048,6 +1048,7 @@ def coctel_dashboard():
     temp_g18.loc[non_numeric_coctel, 'coctel'] = 1.0
 
     if not temp_g18.empty:
+        temp_g18 = temp_g18.copy()  # trabajar con una copia explícita
         temp_g18["mes"] = temp_g18['fecha_registro'].dt.month
         temp_g18["año"] = temp_g18['fecha_registro'].dt.year
 
