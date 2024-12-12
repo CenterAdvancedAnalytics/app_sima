@@ -11,7 +11,6 @@ import pytz
 
 # Botón para actualizar los datos
 st.set_page_config(page_title="Dashboard SIMA", layout="centered")
-
 #%%% Formateo del nombre del sitio y site config
 st.title("Dashboard SIMA")
 st.divider()
@@ -28,12 +27,31 @@ def usarios_acontecimientos_dashboard():
     usuarios_semana = pd.read_parquet('app/tables/temp_usuarios_7_dias.parquet')
 
     # Formatear las columnas de fecha
-    usuarios_por_dia['fecha'] = pd.to_datetime(usuarios_por_dia['fecha'])
-    acontecimientos_por_dia['fecha'] = pd.to_datetime(acontecimientos_por_dia['fecha'])
-    
-    # Seleccionar solo las últimas 30 observaciones
-    usuarios_por_dia = usuarios_por_dia.tail(30)
-    acontecimientos_por_dia = acontecimientos_por_dia.tail(30)
+    # usuarios_por_dia['fecha'] = pd.to_datetime(usuarios_por_dia['fecha'])
+    # acontecimientos_por_dia['fecha'] = pd.to_datetime(acontecimientos_por_dia['fecha'])
+    # usuarios_ultimo_dia['ultima_actualizacion'] = pd.to_datetime(usuarios_ultimo_dia['ultima_actualizacion'])
+
+    usuarios_por_dia['fecha'] = usuarios_por_dia['fecha'].map(str)
+    hoy = datetime.now()
+    hace_30_dias = hoy - timedelta(days=90)
+    temp = pd.DataFrame()
+    temp['fecha'] = pd.date_range(hace_30_dias,hoy,freq='D')
+    temp['fecha'] = temp['fecha'].map(str).str[:10]
+    temp = temp.merge(usuarios_por_dia,how='left',on='fecha')
+    temp['fecha'] = pd.to_datetime(temp['fecha'])
+    temp['usuarios_distintos'] = temp['usuarios_distintos'].fillna(0)
+    usuarios_por_dia = temp
+
+    acontecimientos_por_dia['fecha'] = acontecimientos_por_dia['fecha'].map(str)
+    hoy = datetime.now()
+    hace_30_dias = hoy - timedelta(days=90)
+    temp = pd.DataFrame()
+    temp['fecha'] = pd.date_range(hace_30_dias,hoy,freq='D')
+    temp['fecha'] = temp['fecha'].map(str).str[:10]
+    temp = temp.merge(acontecimientos_por_dia,how='left',on='fecha')
+    temp['fecha'] = pd.to_datetime(temp['fecha'])
+    temp['total_acontecimientos'] = temp['total_acontecimientos'].fillna(0)
+    acontecimientos_por_dia = temp
 
     # Renombrar las columnas en usuarios_semana
     hoy = datetime.now().date()

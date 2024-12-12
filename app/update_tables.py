@@ -145,23 +145,20 @@ def update_data():
         },
         "usuarios_ultimo_dia": {
             "create": text("""
-            CREATE TEMP TABLE temp_usuarios_ultimo_dia AS
+            CREATE TABLE temp_usuarios_ultimo_dia AS
             SELECT
                 u.id AS id_usuario,
                 u.nombre AS nombre_usuario,
-                COUNT(a.id) AS total_acontecimientos
+                MAX(a.fecha_update) AS ultima_actualizacion
             FROM
                 usuarios u
             LEFT JOIN
                 acontecimientos a ON u.id = a.id_usuario_registro
-            WHERE
-                DATE(a.fecha_registro) = (
-                    SELECT MAX(DATE(fecha_registro)) FROM acontecimientos
-                )
+            WHERE a.fecha_registro IS NOT null
             GROUP BY
-                u.id, u.nombre
+                u.id, u.nombre 
             ORDER BY
-                total_acontecimientos DESC;
+                ultima_actualizacion DESC;
             """),
             "read": text("SELECT * FROM temp_usuarios_ultimo_dia;")
         },
@@ -182,8 +179,6 @@ def update_data():
                 usuarios u
             LEFT JOIN
                 acontecimientos a ON u.id = a.id_usuario_registro
-            WHERE
-                DATE(a.fecha_registro) >= CURRENT_DATE - INTERVAL '7 days'
             GROUP BY
                 u.id, u.nombre
             ORDER BY
