@@ -145,7 +145,7 @@ def update_data():
         },
         "usuarios_ultimo_dia": {
             "create": text("""
-            CREATE TABLE temp_usuarios_ultimo_dia AS
+            CREATE TEMP TABLE temp_usuarios_ultimo_dia AS
             SELECT
                 u.id AS id_usuario,
                 u.nombre AS nombre_usuario,
