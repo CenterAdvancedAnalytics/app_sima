@@ -89,6 +89,21 @@ def coctel_dashboard():
     temp_coctel_fuente_actores['fecha_registro'] = pd.to_datetime(temp_coctel_fuente_actores['fecha_registro'])
     temp_coctel_temas['fecha_registro'] = pd.to_datetime(temp_coctel_temas['fecha_registro'])
 
+    temp_coctel_fuente['coctel'] = pd.to_numeric(temp_coctel_fuente['coctel'], errors='coerce')
+    temp_coctel_fuente_programas['coctel'] = pd.to_numeric(temp_coctel_fuente_programas['coctel'], errors='coerce')
+    temp_coctel_fuente_fb['coctel'] = pd.to_numeric(temp_coctel_fuente_fb['coctel'], errors='coerce')
+    temp_coctel_fuente_actores['coctel'] = pd.to_numeric(temp_coctel_fuente_actores['coctel'], errors='coerce')
+    temp_coctel_temas['coctel'] = pd.to_numeric(temp_coctel_temas['coctel'], errors='coerce')
+
+    temp_coctel_fuente['coctel']=temp_coctel_fuente['coctel'].fillna(0.0)
+    temp_coctel_fuente_programas['coctel']=temp_coctel_fuente_programas['coctel'].fillna(0.0)
+    temp_coctel_fuente_fb['coctel']=temp_coctel_fuente_fb['coctel'].fillna(0.0)
+    temp_coctel_fuente_actores['coctel']=temp_coctel_fuente_actores['coctel'].fillna(0.0)
+    temp_coctel_temas['coctel']=temp_coctel_temas['coctel'].fillna(0.0)
+
+    temp_coctel_fuente_programas['nombre_canal'] = temp_coctel_fuente_programas['canal_nombre'] 
+    temp_coctel_fuente_fb['nombre_canal'] = temp_coctel_fuente_fb['canal_nombre'] 
+
     #%% diccionarios
 
     id_posicion_dict = {1: 'a favor',
